@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:core';
 import './news-detail.dart';
@@ -42,109 +42,112 @@ class _NewsScreenState extends State<NewsScreen> {
       appBar: new AppBar(
         title: new Text("Noticias"),
       ),
-      body: new ListView.builder(
-        itemCount: data == null ? 0 : data.length,
-        padding: new EdgeInsets.all(8.0),
-        itemBuilder: (BuildContext context, int index) {
-          return new Card(
-            elevation: 1.7,
-            child:  new GestureDetector(
-              child: new Padding(
-                padding: new EdgeInsets.all(10.0),
-                child: new Column(
-                  children: [
-                    new Row(
-                      children: <Widget>[
-                        new Padding(
-                          padding: new EdgeInsets.only(left: 4.0),
-                          child: new Text(
-                            timeago.format(DateTime.parse(data[index]["created_at"]), locale: "pt_BR"),
-                            style: new TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                        ),
-                        new Padding(
-                          padding: new EdgeInsets.all(5.0),
-                          child: new Text(
-                            data[index]["author"],
-                            style: new TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.grey[700],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    new Row(
-                      children: [
-                        new Expanded(
-                          child: new GestureDetector(
-                            child: new Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                              children: [
-                                new Padding(
-                                  padding: new EdgeInsets.only(
-                                      left: 4.0,
-                                      right: 8.0,
-                                      bottom: 8.0,
-                                      top: 8.0),
-                                  child: new Text(
-                                    data[index]["title"].substring(0, 
-                                      data[index]["title"].length < 20 ? data[index]["title"].length : 20
-                                    ),
-                                    style: new TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                new Padding(
-                                  padding: new EdgeInsets.only(
-                                      left: 4.0,
-                                      right: 4.0,
-                                      bottom: 4.0),
-                                  child: new Text(
-                                    data[index]["text"].substring(0, 
-                                      data[index]["text"].length < 50 ? data[index]["text"].length : 50
-                                    ),
-                                    style: new TextStyle(
-                                      color: Colors.grey[500],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        new Column(
-                          children: <Widget>[
-                            new Padding(
-                              padding:
-                                  new EdgeInsets.only(top: 8.0),
-                              child: new SizedBox(
-                                height: 100.0,
-                                width: 100.0,
-                                child: new Image.network(
-                                  data[index]["image_url"],
-                                  fit: BoxFit.cover,
-                                ),
+      body: new Container(
+        color: const Color(0x57777777),
+        child: new ListView.builder(
+          itemCount: data == null ? 0 : data.length,
+          padding: new EdgeInsets.all(8.0),
+          itemBuilder: (BuildContext context, int index) {
+            return new Card(
+              elevation: 1.7,
+              child:  new GestureDetector(
+                child: new Padding(
+                  padding: new EdgeInsets.all(10.0),
+                  child: new Column(
+                    children: [
+                      new Row(
+                        children: <Widget>[
+                          new Padding(
+                            padding: new EdgeInsets.only(left: 4.0),
+                            child: new Text(
+                              timeago.format(DateTime.parse(data[index]["created_at"]), locale: "pt_BR"),
+                              style: new TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.grey[600],
                               ),
                             ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
+                          ),
+                          new Padding(
+                            padding: new EdgeInsets.all(5.0),
+                            child: new Text(
+                              data[index]["author"],
+                              style: new TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      new Row(
+                        children: [
+                          new Expanded(
+                            child: new GestureDetector(
+                              child: new Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                children: [
+                                  new Padding(
+                                    padding: new EdgeInsets.only(
+                                        left: 4.0,
+                                        right: 8.0,
+                                        bottom: 8.0,
+                                        top: 8.0),
+                                    child: new Text(
+                                      data[index]["title"].substring(0, 
+                                        data[index]["title"].length < 20 ? data[index]["title"].length : 20
+                                      ),
+                                      style: new TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  new Padding(
+                                    padding: new EdgeInsets.only(
+                                        left: 4.0,
+                                        right: 4.0,
+                                        bottom: 4.0),
+                                    child: new Text(
+                                      data[index]["text"].substring(0, 
+                                        data[index]["text"].length < 50 ? data[index]["text"].length : 50
+                                      ),
+                                      style: new TextStyle(
+                                        color: Colors.grey[500],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          new Column(
+                            children: <Widget>[
+                              new Padding(
+                                padding:
+                                    new EdgeInsets.only(top: 8.0),
+                                child: new SizedBox(
+                                  height: 100.0,
+                                  width: 100.0,
+                                  child: new Image.network(
+                                    data[index]["image_url"],
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
+                onTap: () {
+                  show(data[index]);
+                }, 
               ),
-              onTap: () {
-                show(data[index]);
-              }, 
-            ),
-          );
-        },
+            );
+          },
+        ),
       )
     );
   }
@@ -152,7 +155,7 @@ class _NewsScreenState extends State<NewsScreen> {
   show(data){
     Navigator.of(context).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-        return new DetailPage(data);
+        return new NewsDetailPage(data);
       }
       )
     );

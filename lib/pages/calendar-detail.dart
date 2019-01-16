@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:intl/intl.dart';
 
-class NewsDetailPage extends StatelessWidget{
+class CalendarDetailPage extends StatelessWidget{
   var data;
-  NewsDetailPage(this.data);
+  CalendarDetailPage(this.data);
 
   @override
   Widget build(BuildContext context) {
@@ -18,18 +18,6 @@ class NewsDetailPage extends StatelessWidget{
           borderRadius: new BorderRadius.circular(6.0),
           child: new ListView(
             children: <Widget>[
-             new Padding(
-              padding:
-                  new EdgeInsets.only(top: 8.0),
-              child: new SizedBox(
-                height: 100.0,
-                width: 100.0,
-                child: new Image.network(
-                  data["image_url"],
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
               getBody(data),
             ],
           ),
@@ -45,9 +33,11 @@ class NewsDetailPage extends StatelessWidget{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           getTittle(data["title"]),
-          getDate(data["created_at"]),
+          getDate(data["begin"], data['end']),
+          getLocal(data["local"]),
+          // getColor(data["color"]),
+          getDescription(data["description"]),
           getAuthor(data["author"]),
-          getDescription(data["text"]),
         ],
       ),
     );
@@ -61,16 +51,16 @@ class NewsDetailPage extends StatelessWidget{
     );
   }
 
-  getDate(date) {
+  getDate(begin, end) {
     return new Container(
       margin: new EdgeInsets.only(top: 4.0),
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           new Text(
-            timeago.format(DateTime.parse(date), locale: "pt_BR"),
+            new DateFormat("dd/MM/yyyy HH:mm").format(DateTime.parse(begin)) + " - " + new DateFormat("dd/MM/yyyy HH:mm").format(DateTime.parse(end)),
             style: new TextStyle(
-                fontSize: 10.0,
+                fontSize: 12.0,
                 color: Colors.grey
             ),
           ),
@@ -98,6 +88,20 @@ class NewsDetailPage extends StatelessWidget{
   }
 
   getDescription(text) {
+    return new Container(
+      margin: new  EdgeInsets.only(top: 20.0),
+      child: new Text(text),
+    );
+  }
+
+  getLocal(text) {
+    return new Container(
+      margin: new  EdgeInsets.only(top: 20.0),
+      child: new Text(text),
+    );
+  }
+
+  getColor(text) {
     return new Container(
       margin: new  EdgeInsets.only(top: 20.0),
       child: new Text(text),

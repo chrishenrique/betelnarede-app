@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import './calendar.dart';
-import './map.dart';
-import './lesson.dart';
+// import './map.dart';
+// import './lesson.dart';
 import './news.dart';
 // import './videos.dart';
 import './home.dart';
 import './contact.dart';
+import './configuration.dart';
 
 class IndexScreen extends StatefulWidget {
   @override
@@ -58,9 +59,10 @@ class IndexScreenState extends State<IndexScreen> {
       getNavItem(Icons.today, "Calendario", CalendarScreen.routeName),
       getNavItem(Icons.note, "Noticias", NewsScreen.routeName),
       // getNavItem(Icons.video_library, "Videos", VideosScreen.routeName),
-      getNavItem(Icons.book, "Lições", LessonScreen.routeName),
-      getNavItem(Icons.map, "Mapa", MapScreen.routeName),
+      // getNavItem(Icons.book, "Lições", LessonScreen.routeName),
+      // getNavItem(Icons.map, "Mapa", MapScreen.routeName),
       getNavItem(Icons.forum, "Fale Conosco", ContactScreen.routeName),
+      getNavItem(Icons.settings, "Configurações", ConfigurationScreen.routeName),
       new Divider(),
       aboutChild
     ];

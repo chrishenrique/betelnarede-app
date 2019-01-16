@@ -3,6 +3,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'dart:convert';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatelessWidget{
   HomePage();
@@ -13,14 +14,31 @@ class HomePage extends StatelessWidget{
   }
 
   Widget _getItems() {
-    return new ListView(
-        children: <Widget>[
-          _name(),
-          _banners(),
-          _video(),
-          _birthday(),
-        ],
+    return new Container(
+      color: const Color(0x57777777),
+      child: ListView(
+          children: <Widget>[
+            _name(),
+            _banners(),
+            _events(),
+            // _video(),
+            _birthday(),
+          ],
+      ),
     );
+  }
+
+  Future<String> _get(String url) {
+    return http.get(url).then((http.Response response) {
+      final String res = response.body;
+      final int statusCode = response.statusCode;
+
+      if (statusCode < 200 || statusCode > 400) {
+        throw new Exception("Error while fetching data");
+      }
+      // print("Response get: ${res}");
+      return res;
+    });
   }
 
   _name() {
@@ -133,8 +151,85 @@ class HomePage extends StatelessWidget{
     return list;
   }
 
-  _video() {
-    var link = "https://r1---sn-vgqsknee.googlevideo.com/videoplayback?signature=D8506A220599CBCB9EE83ABFA81D8F977E41CC53.962AB0F5C3170CC57BB04F3BB2E1157C68EE8440&expire=1542526397&ratebypass=yes&pl=14&mv=m&id=o-AOlTxqwpRyQ2fpaWmfOSpA7mvmK7cda0gJzC6guHfyB7&ms=au%2Crdu&ipbits=0&mm=31%2C29&mime=video%2Fmp4&mn=sn-vgqsknee%2Csn-vgqsrnez&mt=1542504703&key=yt6&ip=54.144.123.57&source=youtube&dur=309.730&c=WEB&ei=XMHwW6PQNKnn8gST16gg&lmt=1528858995498969&itag=22&requiressl=yes&sparams=dur%2Cei%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&fvip=1&initcwndbps=4277500";
+  _events() {
+    return new Card(
+      child: new Column(
+        children: <Widget>[
+          new Padding(
+            padding: new EdgeInsets.all(7.0),
+            child: new Row(
+              children: <Widget>[
+                new Padding(
+                  padding: new EdgeInsets.all(7.0),
+                  child: new Icon(Icons.calendar_today),
+                ),
+                new Padding(
+                  padding: new EdgeInsets.all(7.0),
+                  child: new Text('Proximos Eventos', 
+                    style: new TextStyle(fontSize: 18.0),
+                  ),
+                ),
+              ],
+            )
+          ),
+          new Column(
+            children: _getEvents(),
+          )
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _getEvents() {
+    // var response = http.get(new Uri.http('betelnarede.com:8000', '/api/birthdays'));
+    // List birthdays = jsonDecode(response.body);
+
+    var response = '[{"date":"08/07","time":"12:00","name":"Conferência 45 anos - 1 dia"},{"date":"06/07","time":"12:00","name":"Culto dos Homens"},{"date":"03/07","time":"12:00","name":"Dia Betel"},{"date":"01/07","time":"12:00","name":"Noite das Crianças"}]';
+    List birthdays = jsonDecode(response);
+    List<Widget> list = new List();
+
+    birthdays.map((item) => list.add(new Padding(
+        padding: new EdgeInsets.all(7.0),
+        child: new Row(
+          children: <Widget>[
+            new Padding(
+              padding: new EdgeInsets.only(
+                left: 7.0,
+                right: 7.0,
+              ),
+              child: new Text(item['name'], 
+                style: new TextStyle(fontSize: 18.0),
+              ),
+            ),
+            new Text('-'),
+            new Padding(
+              padding: new EdgeInsets.only(
+                left: 7.0,
+                right: 7.0,
+              ),
+              child: new Text(item['date']),
+            ),
+            new Text('às'),
+            new Padding(
+              padding: new EdgeInsets.only(
+                left: 7.0,
+                right: 7.0,
+              ),
+              child: new Text(item['time']),
+            ),
+          ],
+        )
+      )
+    )).toList();
+
+    return list;
+  }
+
+  _video() async{
+    var url = 'http://you-link.herokuapp.com/?url=https://www.youtube.com/watch?v=1BnpOcUFxys';
+    String response = await _get(url);
+    var arrResponse = jsonDecode(response);
+    var link = arrResponse[0]['link'];
     return new Card(
       child: new Column(
         children: <Widget>[

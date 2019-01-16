@@ -4,12 +4,13 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/services.dart';
 
 import './pages/news.dart';
-import './pages/videos.dart';
+// import './pages/videos.dart';
 import './pages/calendar.dart';
-import './pages/map.dart';
-import './pages/lesson.dart';
+// import './pages/map.dart';
+// import './pages/lesson.dart';
 import './pages/index.dart';
 import './pages/contact.dart';
+import './pages/configuration.dart';
 
 void main() {
   timeago.setLocaleMessages('pt_BR', timeago.PtBrMessages());
@@ -39,9 +40,10 @@ void main() {
       CalendarScreen.routeName: (BuildContext context) => new CalendarScreen(),
       NewsScreen.routeName: (BuildContext context) => new NewsScreen(),
       // VideosScreen.routeName: (BuildContext context) => new VideosScreen(),
-      LessonScreen.routeName: (BuildContext context) => new LessonScreen(),
-      MapScreen.routeName: (BuildContext context) => new MapScreen(),
+      // LessonScreen.routeName: (BuildContext context) => new LessonScreen(),
+      // MapScreen.routeName: (BuildContext context) => new MapScreen(),
       ContactScreen.routeName: (BuildContext context) => new ContactScreen(),
+      ConfigurationScreen.routeName: (BuildContext context) => new ConfigurationScreen(),
     },
   ));
 }
